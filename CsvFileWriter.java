@@ -1,33 +1,35 @@
+import java.awt.Desktop;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.util.*;
 
+// TODO: Auto-generated Javadoc
 /**
- * @author ashraf
- * 
+ * The Class CsvFileWriter.
+ *
+ * @author ashraf & dcfox
  */
 public class CsvFileWriter {
 	
 	//Delimiter used in CSV file
+	/** The Constant COMMA_DELIMITER. */
 	private static final String COMMA_DELIMITER = ",";
+	
+	/** The Constant NEW_LINE_SEPARATOR. */
 	private static final String NEW_LINE_SEPARATOR = "\n";
 	
 	//CSV file header
-	private static final String FILE_HEADER = "id,firstName,lastName,gender,age";
+	/** The Constant FILE_HEADER. */
+	private static final String FILE_HEADER = "Name,Food Waste (lbs),Time";
 
-	public static void writeCsvFile(String fileName) {
-		
-		//Create new wasters objects
-		Date date = new Date();
-		Waster student1 = new Waster("Mohamed", 25, date);
-		Waster student2 = new Waster("Said", 23, date);
-
-		//Create a new list of student objects
-		List wasters = new ArrayList();
-		wasters.add(student1);
-		wasters.add(student2);
-		
+	/**
+	 * Write csv file.
+	 *
+	 * @param fileName the file name
+	 * @param students the students
+	 */
+	public static void writeCsvFile(String fileName, List<Waster> students) {
+				
 		FileWriter fileWriter = null;
 				
 		try {
@@ -40,16 +42,16 @@ public class CsvFileWriter {
 			fileWriter.append(NEW_LINE_SEPARATOR);
 			
 			//Write a new student object list to the CSV file
-			/*
-			for (Waster student : wasters) {
+			
+			for (Waster student : students) {
 				fileWriter.append(student.getName());
 				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append(student.getAmount());
+				fileWriter.append(Float.toString(student.getAmount()));
 				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append(student.getDate().getTime());
+				fileWriter.append(student.getDate());
 				fileWriter.append(NEW_LINE_SEPARATOR);
 			}
-			*/
+			
 
 			
 			

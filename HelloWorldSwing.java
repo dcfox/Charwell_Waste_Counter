@@ -46,19 +46,33 @@
  * HelloWorldSwing.java requires no other files. 
  */
 import javax.swing.*;
+
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;        
+import java.awt.event.MouseEvent;  
+import java.util.ArrayList;
+import java.util.List;
 
+
+
+// TODO: Auto-generated Javadoc
+/**
+ * The Class HelloWorldSwing.
+ */
 public class HelloWorldSwing {
-	private static JTextField textField;
-	private static JTextField textField_1;
+	
+	/** The name_field. */
+	private static JTextField name_field;
+	
+	/** The weight_field. */
+	private static JTextField weight_field;
     /**
      * Create the GUI and show it.  For thread safety,
      * this method should be invoked from the
      * event-dispatching thread.
      */
     private static void createAndShowGUI() {
+    	List<Waster> students = new ArrayList<Waster>();
         //Create and set up the window.
         JFrame frmChartwellsWasteCounter = new JFrame("HelloWorldSwing");
         frmChartwellsWasteCounter.setTitle("Chartwell's Waste Counter");
@@ -74,16 +88,16 @@ public class HelloWorldSwing {
         JLabel lblNewLabel = new JLabel("Name (optional)");
         panel_texts.add(lblNewLabel);
         
-        textField = new JTextField();
-        panel_texts.add(textField);
-        textField.setColumns(10);
+        name_field = new JTextField();
+        panel_texts.add(name_field);
+        name_field.setColumns(10);
         
         JLabel lblNewLabel_1 = new JLabel("Weight of waste (lbs.)");
         panel_texts.add(lblNewLabel_1);
         
-        textField_1 = new JTextField();
-        panel_texts.add(textField_1);
-        textField_1.setColumns(10);
+        weight_field = new JTextField();
+        panel_texts.add(weight_field);
+        weight_field.setColumns(10);
         
         JPanel panel = new JPanel();
         tabbedPane.addTab("Graphs", null, panel, null);
@@ -93,9 +107,12 @@ public class HelloWorldSwing {
         
         JButton btnNewButton = new JButton("Save & Close");
         btnNewButton.addMouseListener(new MouseAdapter() {
-        	@Override
+        	@SuppressWarnings("static-access")
+			@Override
         	public void mouseClicked(MouseEvent arg0) {
         		//close window and create csv file
+        		CsvFileWriter csv = new CsvFileWriter();
+        		csv.writeCsvFile("C:\\temp/test.csv", students);
         	}
         });
         panel_button.add(btnNewButton);
@@ -105,6 +122,16 @@ public class HelloWorldSwing {
         	@Override
         	public void mouseClicked(MouseEvent e) {
         		//add to list of students
+        		String name = name_field.getText();
+        		name_field.setText("");
+        		if (name.isEmpty()){
+        			name = "anonymous";
+        		}
+        		float amount = Float.parseFloat(weight_field.getText());
+        		weight_field.setText("");
+        		Waster student = new Waster(name, amount);
+        		System.out.print("Button pressed \n\r");
+        		students.add(student);
         	}
         });
         panel_button.add(btnNewButton_1);
@@ -117,13 +144,21 @@ public class HelloWorldSwing {
         frmChartwellsWasteCounter.setVisible(true);
     }
 
+    /**
+     * The main method.
+     *
+     * @param args the arguments
+     */
     public static void main(String[] args) {
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
+    	System.out.print("Program starting \n\r");
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 createAndShowGUI();
+                System.out.print("I have reach this code \n\r");
             }
         });
+        System.out.print("Can you even see this? \n\r");
     }
 }
